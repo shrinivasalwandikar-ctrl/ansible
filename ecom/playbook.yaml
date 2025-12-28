@@ -1,0 +1,17 @@
+---
+- name: Install playbook
+  hosts: web_servers
+  become: yes
+
+  tasks:
+    
+    - name: Install nginx
+      apt:
+        name: "{{my_package}}"
+        state: present
+
+    - name: Install Apache
+      apt:
+        name: "{{my_package}}"
+        state: present
+        

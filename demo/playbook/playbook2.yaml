@@ -1,0 +1,22 @@
+---
+- name: Install playbook
+  hosts: web_servers
+  become: yes
+
+  tasks:
+    - name: update apt cache
+      apt:
+        update_cache: yes
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+    - name: start nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+
+
+      

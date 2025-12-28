@@ -1,0 +1,21 @@
+# ---
+# - name: simple playbook
+#   hosts: all
+#   gather_stats: no
+#   tasks:
+#     - name: ping all hosts
+#       ping:
+
+
+---
+- name: simple playbook
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+    - name: ping all hosts
+      ping:
+    - name: print all gather_facts
+      debug:
+        var: ansible_facts  
+
