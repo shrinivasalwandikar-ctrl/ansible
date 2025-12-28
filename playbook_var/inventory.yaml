@@ -1,0 +1,19 @@
+all:
+  vars: 
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: /home/shrinivas/.ssh/VinKey.pem
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
+children:
+    webservers:
+      hosts:
+        web1:
+          ansible_host: 3.110.167.182
+        web2:
+          ansible_host: 65.0.124.174
+
+    databases:
+      hosts:
+        db1:
+          ansible_host: 13.235.76.10
+        

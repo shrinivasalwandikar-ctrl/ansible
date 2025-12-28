@@ -16,4 +16,23 @@
       become: yes
     - name: Print data
       debug:
-         msg: "Nginx will run on port {{ web_port }} in {{ env }} environment"     
+         msg: "Nginx will run on port {{ web_port }} in {{ env }} environment"
+
+- naame: install nginx using playbook variables
+  hosts: databases
+  vars:
+      package_name: mysql
+      web_port: 3306
+      env: dev
+
+
+  tasks:
+    - name: install mysql using playbook variables
+      apt:
+        name: "{{ package_name }}"
+        state: present
+        update_cache: yes
+      become: yes
+    - name: Print data
+      debug:
+         msg: "Mysql will run on port {{ web_port }} in {{ env }} environment"
