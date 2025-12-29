@@ -1,0 +1,19 @@
+---
+- naame: install nginx using playbook variables
+  hosts: webservers
+
+
+  tasks:
+    - name: install nginx using playbook variables
+      apt:
+        name: "{{ package_name }}"
+        state: present
+        update_cache: yes
+      become: yes
+    - name: Print data
+      debug:
+        msg: |
+         Host: "{{ inventory_hostname }}"
+         package: "{{ package_name }}"
+         port: "{{ web_port}}"
+
