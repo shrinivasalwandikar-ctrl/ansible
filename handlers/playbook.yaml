@@ -1,0 +1,44 @@
+---
+- name: Handlers demo
+  hosts: 
+    web1:
+    web2:
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: latest
+        update_cache: yes
+    
+    - name: Copy html file
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+        
+    - name: copy configuration file 
+      copy:
+        src: celebreatian.com
+        dest: /etc/nginx/sites-available/celebreatian.com
+        mode: '0644'
+      notify: restart the nginx service
+
+
+    - name: create symbolic link
+      file:
+        src: /etc/nginx/sites-available/celebreatian.com
+        dest: /etc/nginx/sites-enabled/celebreatian.com
+        state: link
+      notify: restart the nginx service
+
+    - name: remove the default config
+      file:
+
+    
+    handlers:
+      - name: restart the nginx service
+        service:
+          name: nginx
+          state: restarted
+          become: yes
+      
+      
