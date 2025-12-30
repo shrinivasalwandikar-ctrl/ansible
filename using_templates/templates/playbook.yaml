@@ -1,0 +1,49 @@
+---
+- name: Demo on template
+  hosts: web1
+  become: yes
+  vars:
+    website_name: celebretian.com
+    index_file: index.html
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: latest
+        update_cache: yes
+    
+    - name: Copy source code
+      template:
+        src: template/{{index.html}}
+        dest: /var/www/html/{{index.html}}
+        
+    - name: copy {{ website_name }} nginx config 
+      copy:
+        src: template/website.conf.j2
+        dest: /etc/nginx/sites-available/{{website_name}}
+        mode: '0644'
+      notify: restart the nginx service
+
+
+    - name: Enable {{ website_name }} site
+      file:
+        src: /etc/nginx/sites-available/{{website_name}}
+        dest: /etc/nginx/sites-enabled/{{website_name}}
+        state: link
+      notify: restart the nginx service
+
+    - name: remove the default config from sites-enabled
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      notify: restart the nginx service  
+
+    
+    handlers:
+      - name: restart the nginx service
+        service:
+          name: nginx
+          state: restarted
+          become: yes
+      
+      

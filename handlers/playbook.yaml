@@ -17,7 +17,7 @@
         
     - name: copy configuration file 
       copy:
-        src: celebreatian.com
+        src: celebretian.com
         dest: /etc/nginx/sites-available/celebreatian.com
         mode: '0644'
       notify: restart the nginx service
@@ -32,6 +32,9 @@
 
     - name: remove the default config
       file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      notify: restart the nginx service  
 
     
     handlers:
